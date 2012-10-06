@@ -1,0 +1,3 @@
+defrag_plupload:
+    pattern:   /_upload
+    defaults:  { _controller: DefragPluploadBundle:Upload:upload }

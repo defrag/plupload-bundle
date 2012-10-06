@@ -1,0 +1,9 @@
+plupload:
+    button:
+        upload: Télécharger
+        remove: Supprimer
+
+    filters: Veuillez sélectionner une image.
+
+    error:
+        upload: Une erreur s'est produite lors du téléchargement du fichier.

@@ -1,0 +1,10 @@
+parameters:
+    defrag_plupload.form.type.class: Defrag\PluploadBundle\Form\Type\PluploadType
+
+services:
+    form.type.plupload:
+        class: %defrag_plupload.form.type.class%        
+        tags:
+            - { name: form.type, alias: plupload }
+        calls:
+            - [ setContainer, [ @service_container ] ]

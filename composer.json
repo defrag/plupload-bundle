@@ -1,0 +1,20 @@
+{
+    "name": "defrag/plupload-bundle",
+    "description": "Provides a Plupload integration for your Symfony2 project.",
+    "keywords": ["plupload"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michał Dąbrowski (defrag)",
+            "email": "dabrowski@brillante.pl"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "2.*",
+    },
+    "autoload": {
+        "psr-0": { "Defrag\\PluploadBundle": "" }
+    },
+    "target-dir": "Defrag/PluploadBundle"
+}

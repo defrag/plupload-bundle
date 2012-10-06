@@ -1,0 +1,78 @@
+{% form_theme form _self %}
+
+{{ dump(form) }}
+
+{% block plupload_widget %}
+{% spaceless %}
+
+
+    <a id="defrag-choose-files" href="#">{{ 'defrag.plupload.select_images'|trans({}, 'DefragPluploadBundle') }}</a> 
+    
+    <div id="defrag-attachments">      
+        {% for item in data %}
+            {{ item }}
+            <input type="hidden" value="{{ item.id }}" name="'{{ full_name }}[]'" />
+        {% endfor %}
+    </div>
+
+
+   
+
+    <script type="text/javascript" src="{{ asset('bundles/defragplupload/js/lib/plupload.full.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/defragplupload/js/uploader.js') }}"></script>
+
+    <script type="text/javascript">
+
+
+
+        var uploader = new plupload.Uploader({
+            runtimes : 'html5,silverlight,browserplus',
+            browse_button : 'defrag-choose-files',
+            max_file_size : '10mb',
+            url : '{{ path('defrag_plupload') }}',       
+            multipart: true,
+            multipart_params: {
+                '_http_accept': 'application/javascript'
+            },
+
+            filters : [
+                {title : "Image files", extensions : "jpg,jpeg,gif,png"}
+            ]
+
+        });
+
+        uploader.bind('FileUploaded', function(up, file, data) {
+            f = jQuery.parseJSON(data.response);
+            d = new Date().getTime();
+            $('<input>').attr({
+                        type: 'hidden',
+                        value: f.id,
+                        name: '{{ full_name }}[]'
+            }).appendTo('#defrag-attachments');                
+        });    
+
+        uploader.bind('FilesAdded', function(up, files) {            
+            for (var i in files) {
+                $('#defrag-attachments').append('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b></div>');
+            }
+            setTimeout(function () { up.start(); }, 100);
+        });
+
+        uploader.bind('UploadProgress', function(up, file) {
+            $("#"+file.id).find('b').html('<span>' + file.percent + "%</span>");
+        });
+
+        uploader.bind('Error', function(up, err) {
+            $('#defrag-attachments').append("<div>Error: " + err.code + ", Message: " + err.message +(err.file ? ", File: " + err.file.name : "") +"</div>");
+            up.refresh(); 
+        });
+        
+        
+
+        $(document).ready(function(){
+            uploader.init();   
+        });
+    
+    </script>
+{% endspaceless %}
+{% endblock %}
