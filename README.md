@@ -31,6 +31,15 @@ Bundle for multiple uploads using Plupload
         orm_class: RE\AssetBundle\Entity\Asset
 ```
 
+##### 5. Add to your form
+```php
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('assets', 'plupload')            
+        ;
+    }
+```
 
 upload_service shall implement Defrag\PluploadBundle\Mode\UploaderInterface. 
 
