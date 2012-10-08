@@ -1,7 +1,5 @@
 {% form_theme form _self %}
 
-{{ dump(form) }}
-
 {% block plupload_widget %}
 {% spaceless %}
 
@@ -10,7 +8,7 @@
     
     <div id="defrag-attachments">      
         {% for item in data %}
-            {{ item }}
+            <div>{{ item }}</div>
             <input type="hidden" value="{{ item.id }}" name="'{{ full_name }}[]'" />
         {% endfor %}
     </div>
@@ -53,7 +51,14 @@
 
         uploader.bind('FilesAdded', function(up, files) {            
             for (var i in files) {
-                $('#defrag-attachments').append('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b></div>');
+                var remove = $('<span class="defrag-remove"><a href="#">(x)</a></span>').bind('click', function(e) {
+                    e.preventDefault();
+                    $(e.currentTarget).parent('div').remove();
+                });
+                var div = $('<div>' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b></div>');
+                div.append(remove);
+                $('#defrag-attachments').append(div);
+
             }
             setTimeout(function () { up.start(); }, 100);
         });
@@ -70,6 +75,13 @@
         
 
         $(document).ready(function(){
+            $('#defrag-attachments div').each(function(key, item) {
+                var remove = $('<span class="defrag-remove"><a href="#">(x)</a></span>').bind('click', function(e) {
+                    e.preventDefault();
+                    $(e.currentTarget).parent('div').remove();
+                });
+                $(item).append(remove);
+            })
             uploader.init();   
         });
     
