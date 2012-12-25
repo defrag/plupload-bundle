@@ -8,7 +8,7 @@ Bundle for multiple uploads using Plupload
 ##### 1. Add the following to your `composer.json` file:
 
 ```ini
-    "defrag/plupload-bundle" : "*"
+    "defrag/plupload-bundle" : "dev-master"
 ```
 
 ##### 2. Run composer update:
